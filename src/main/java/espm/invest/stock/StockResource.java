@@ -2,6 +2,8 @@ package espm.invest.stock;
 
 import espm.invest.stock.common.controller.StockController;
 import espm.invest.stock.common.datatype.Stock;
+import espm.invest.stock.exception.RecordNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -13,13 +15,12 @@ import java.util.UUID;
 @RestController
 public class StockResource implements StockController {
 
+    @Autowired
+    private StockService stockService;
+
     @Override
     public List<Stock> stock() {
-        List<Stock> stocks = new ArrayList<>();
-        Date data = new Date();
-        Stock s1 = new Stock(UUID.randomUUID(),  "TESTE", data, 200);
-        stocks.add(s1);
-        return stocks;
+        return stockService.listAll();
     }
 
     @Override
