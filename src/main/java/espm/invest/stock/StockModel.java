@@ -26,14 +26,14 @@ public class StockModel {
 
     }
     public StockModel(Stock b){
-        this.idStock = b.getId().toString();
+        this.idStock = b.getId();
         this.name = b.getName();
         this.date = b.getDate();
         this.price = b.getPrice();
     }
     public Stock to(){
         Stock b = new Stock();
-        b.setId(UUID.fromString(idStock));
+        b.setId(idStock);
         b.setName(name);
         b.setDate(date);//converte aqui
         b.setPrice(price);

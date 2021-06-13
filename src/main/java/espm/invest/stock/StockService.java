@@ -14,6 +14,9 @@ import java.util.stream.StreamSupport;
 public class StockService {
 
     @Autowired
+    private StockService stockService;
+
+    @Autowired
     private StockRepository stockRepository;
 
     public List<Stock> listAll() {
@@ -24,13 +27,21 @@ public class StockService {
                 .collect(Collectors.toList());
     }
 
-    public Stock findBy(UUID id) {
+    public Stock findById(UUID id) {
         return stockRepository.findById(id.toString()).map(stockModel -> stockModel.to()).orElse(null);
 
     }
 
+
+    public Stock findByName(String name) {
+        return stockRepository
+                .findByName(name)
+                .map(StockModel::to)
+                .orElse(null);
+    }
+
     public Stock create(Stock stock) {
-        stock.setId(UUID.randomUUID());
+        stock.setId(UUID.randomUUID().toString());
         return stockRepository.save(new StockModel(stock)).to();
     }
 
@@ -50,8 +61,29 @@ public class StockService {
 //                .collect(Collectors.toList());
 //    }
 
+    //    public Stock findBy(String idStock, Date date) {
+///*
+//        List<CotacaoModel> cotacoes = cotacaoRepository.listByMoedaData(idMoeda, data);
+//        if (cotacoes.size() > 0) {
+//            CotacaoModel cm = cotacoes.get(0);
+//            return cm.to();
+//        } else {
+//            return null;
+//        }
+//*/
+//        Stock stock = stockRepository
+//                .listByStockDate(idStock, date).stream()
+//                .map(StockModel::to)
+//                .findFirst()
+//                .orElse(null);
+//        // Aqui esta sendo feito um relacionamento
+//        return fill(cotacao);
+//    }
+//
     public void delete(UUID id) {
         stockRepository.deleteById(id.toString());
     }
+
+
 
 }
