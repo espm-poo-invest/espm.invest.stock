@@ -36,4 +36,6 @@ public interface StockRepository extends CrudRepository<StockModel, String>{
 
     @Query("SELECT m from StockModel m WHERE UPPER(m.name) = UPPER(:name)")
     Optional<StockModel> findByName(@Param("name") String name);
+
+
 }

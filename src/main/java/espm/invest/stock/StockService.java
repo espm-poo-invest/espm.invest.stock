@@ -45,11 +45,7 @@ public class StockService {
         return stockRepository.save(new StockModel(stock)).to();
     }
 
-//    public List<Stock> listByName(String name){
-//        return stockRepository.listByName(name)
-//                .stream().map(StockModel::to)
-//                .collect(Collectors.toList());
-//    }
+
 //    public List<Stock> listByDate(Date date){
 //        return stockRepository.listByDate(date.toString())
 //                .stream().map(StockModel::to)
@@ -61,25 +57,23 @@ public class StockService {
 //                .collect(Collectors.toList());
 //    }
 
-    //    public Stock findBy(String idStock, Date date) {
-///*
-//        List<CotacaoModel> cotacoes = cotacaoRepository.listByMoedaData(idMoeda, data);
-//        if (cotacoes.size() > 0) {
-//            CotacaoModel cm = cotacoes.get(0);
-//            return cm.to();
-//        } else {
-//            return null;
-//        }
-//*/
-//        Stock stock = stockRepository
-//                .listByStockDate(idStock, date).stream()
-//                .map(StockModel::to)
-//                .findFirst()
-//                .orElse(null);
-//        // Aqui esta sendo feito um relacionamento
-//        return fill(cotacao);
-//    }
-//
+    public Stock findBy(String idStock, Date date) {
+        return stockRepository
+                .listByStockDate(idStock, date).stream()
+                .map(StockModel::to)
+                .findFirst()
+                .orElse(null);
+    }
+
+    public List<Stock> listBy(String idStock, Date dtInicio, Date dtFim) {
+        return stockRepository
+                .listBy(idStock, dtInicio, dtFim).stream()
+                .map(StockModel::to)
+                .collect(Collectors.toList());
+    }
+
+
+
     public void delete(UUID id) {
         stockRepository.deleteById(id.toString());
     }
