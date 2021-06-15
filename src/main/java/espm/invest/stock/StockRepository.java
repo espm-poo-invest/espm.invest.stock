@@ -34,8 +34,8 @@ public interface StockRepository extends CrudRepository<StockModel, String>{
             @Param("dtFim") Date dtFim
     );
 
-    @Query("SELECT m from StockModel m WHERE UPPER(m.name) = UPPER(:name)")
-    Optional<StockModel> findByName(@Param("name") String name);
+    @Query("SELECT m from StockModel m WHERE UPPER(m.name) = UPPER(:name)  ORDER BY m.date DESC")
+    List<StockModel> findByName(@Param("name") String name);
 
 
 }

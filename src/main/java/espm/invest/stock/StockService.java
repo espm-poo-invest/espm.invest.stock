@@ -32,12 +32,14 @@ public class StockService {
 
     }
 
-
     public Stock findByName(String name) {
-        return stockRepository
-                .findByName(name)
-                .map(StockModel::to)
-                .orElse(null);
+        List<Stock> stocks =  StreamSupport
+                .stream(stockRepository.findByName(name).spliterator(), false)
+                .collect(Collectors.toList())
+                .stream().map(StockModel::to)
+                .collect(Collectors.toList());
+
+        return stocks.size() == 0 ? null : stocks.get(0);
     }
 
     public Stock create(Stock stock) {
